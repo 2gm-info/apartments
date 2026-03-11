@@ -1,64 +1,110 @@
 <!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="refresh" content="3600">
 <title>Infoskjerm</title>
 
 <style>
 body{
-    margin:0;
-    overflow:hidden;
-    background:#000;
-    color:white;
-    font-family:Arial, Helvetica, sans-serif;
+margin:0;
+overflow:hidden;
+background:#000;
+color:white;
+font-family:Arial;
 }
 
 .container{
-    width:1920px;
-    height:1080px;
-    position:relative;
+width:1920px;
+height:1080px;
+position:relative;
 }
 
 #clock{
-    position:absolute;
-    top:40px;
-    right:60px;
-    font-size:60px;
+position:absolute;
+top:40px;
+right:60px;
+font-size:70px;
+}
+
+#weather{
+position:absolute;
+top:40px;
+left:60px;
+font-size:40px;
+}
+
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+display:none;
 }
 
 #ticker{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    background:#111;
-    padding:10px;
-    font-size:28px;
+position:absolute;
+bottom:0;
+width:100%;
+background:#111;
+padding:15px;
+font-size:30px;
 }
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
+<img class="slide" src="https://picsum.photos/1920/1080?1">
+<img class="slide" src="https://picsum.photos/1920/1080?2">
+<img class="slide" src="https://picsum.photos/1920/1080?3">
+
 <div id="clock"></div>
+<div id="weather">Laster vær...</div>
 
 <div id="ticker">
-Manager Mobil: 99 10 10 41 – Wifi: dittnett / passord
+Manager Mobil: 99 10 10 41 | WIFI: Nett / Passord
 </div>
 
 </div>
 
 <script>
+
 function updateClock(){
-    const now = new Date();
-    document.getElementById("clock").innerHTML =
-        now.toLocaleTimeString('no-NO');
+const now = new Date();
+document.getElementById("clock").innerHTML =
+now.toLocaleTimeString('no-NO');
 }
 setInterval(updateClock,1000);
 updateClock();
+
+
+async function loadWeather(){
+const url="https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=69.229&lon=17.981";
+const res=await fetch(url);
+const data=await res.json();
+const temp=data.properties.timeseries[0].data.instant.details.air_temperature;
+document.getElementById("weather").innerHTML="Finnsnes "+temp+"°C";
+}
+loadWeather();
+
+
+let slideIndex=0;
+const slides=document.querySelectorAll(".slide");
+
+function showSlides(){
+slides.forEach(s=>s.style.display="none");
+slideIndex++;
+if(slideIndex>slides.length){slideIndex=1}
+slides[slideIndex-1].style.display="block";
+setTimeout(showSlides,10000);
+}
+showSlides();
+
 </script>
 
 </body>
