@@ -1,109 +1,230 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="no">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="600">
+
 <title>Infoskjerm</title>
 
 <style>
+
 body{
 margin:0;
-overflow:hidden;
 background:#000;
 color:white;
-font-family:Arial;
-}
-
-.container{
-width:1920px;
-height:1080px;
-position:relative;
-}
-
-#clock{
-position:absolute;
-top:40px;
-right:60px;
-font-size:70px;
-}
-
-#weather{
-position:absolute;
-top:40px;
-left:60px;
-font-size:40px;
+font-family:Arial, Helvetica, sans-serif;
+overflow:hidden;
 }
 
 .slide{
 position:absolute;
 width:100%;
 height:100%;
-object-fit:cover;
+padding:80px;
+box-sizing:border-box;
 display:none;
 }
 
-#ticker{
+.active{
+display:block;
+}
+
+h1{
+font-size:64px;
+margin-bottom:20px;
+}
+
+h2{
+font-size:40px;
+margin-bottom:30px;
+}
+
+h3{
+font-size:30px;
+margin-top:30px;
+}
+
+p,li{
+font-size:28px;
+line-height:1.4;
+}
+
+ul{
+margin-left:40px;
+}
+
+#clock{
+position:absolute;
+top:40px;
+right:60px;
+font-size:48px;
+font-weight:bold;
+}
+
+#weather{
+position:absolute;
+top:120px;
+right:60px;
+font-size:28px;
+}
+
+.ticker{
 position:absolute;
 bottom:0;
 width:100%;
 background:#111;
+font-size:26px;
 padding:15px;
-font-size:30px;
+white-space:nowrap;
+overflow:hidden;
 }
+
+.ticker span{
+display:inline-block;
+padding-left:100%;
+animation:scroll 30s linear infinite;
+}
+
+@keyframes scroll{
+0%{transform:translateX(0);}
+100%{transform:translateX(-100%);}
+}
+
 </style>
 
 </head>
 
 <body>
 
-<div class="container">
-
-<img class="slide" src="https://picsum.photos/1920/1080?1">
-<img class="slide" src="https://picsum.photos/1920/1080?2">
-<img class="slide" src="https://picsum.photos/1920/1080?3">
-
 <div id="clock"></div>
-<div id="weather">Laster vær...</div>
+<div id="weather"></div>
 
-<div id="ticker">
-Manager Mobil: 99 10 10 41 | WIFI: Nett / Passord
+<!-- Slide 1 -->
+
+<div class="slide active">
+
+<h1>VELKOMMEN</h1>
+
+<h2>Bolig – Strandveien</h2>
+
+<p>
+Manager Mobil: <b>99 10 10 41</b>
+</p>
+
+<p>
+Vi ber alle vise hensyn til hverandre og bidra til et godt bomiljø.
+</p>
+
 </div>
 
+<!-- Slide 2 -->
+
+<div class="slide">
+
+<h1>WiFi Informasjon</h1>
+
+<p><b>WiFi:</b> BuildingGuest</p>
+<p><b>Password:</b> ********</p>
+
+<p>
+Kontakt manager dersom du opplever problemer med internett.
+</p>
+
+</div>
+
+<!-- Slide 3 -->
+
+<div class="slide">
+
+<h1>SALMAR</h1>
+
+<h2>Creating a Safe and Respectful Living Environment</h2>
+
+<p>This applies to both accommodation rigs and apartments/housing.</p>
+
+<h3>Zero tolerance for:</h3>
+
+<ul>
+<li>Bullying and harassment</li>
+<li>Discrimination and racism</li>
+<li>Gender-based violence and unwanted sexual attention</li>
+<li>Violence and threats</li>
+<li>Substance abuse that creates insecurity</li>
+</ul>
+
+<h3>Respect for Each Other</h3>
+
+<ul>
+<li>Show consideration in shared spaces</li>
+<li>Keep noise levels low during evenings and nights</li>
+<li>Clean up after yourself in common areas</li>
+<li>Respect privacy and personal boundaries</li>
+<li>Foster an inclusive and friendly environment</li>
+<li>Communicate openly and politely</li>
+</ul>
+
+</div>
+
+<div class="ticker">
+<span>
+Manager Mobil: 99 10 10 41 &nbsp;&nbsp; | &nbsp;&nbsp;
+Vis hensyn til andre beboere &nbsp;&nbsp; | &nbsp;&nbsp;
+WiFi tilgjengelig i hele bygget
+</span>
 </div>
 
 <script>
 
+let slides = document.querySelectorAll(".slide")
+let index = 0
+
+setInterval(function(){
+
+slides[index].classList.remove("active")
+
+index++
+
+if(index >= slides.length){
+index = 0
+}
+
+slides[index].classList.add("active")
+
+},10000)
+
 function updateClock(){
-const now = new Date();
-document.getElementById("clock").innerHTML =
-now.toLocaleTimeString('no-NO');
+
+let now = new Date()
+
+let h = String(now.getHours()).padStart(2,"0")
+let m = String(now.getMinutes()).padStart(2,"0")
+
+document.getElementById("clock").innerHTML = h + ":" + m
+
 }
-setInterval(updateClock,1000);
-updateClock();
 
+setInterval(updateClock,1000)
 
-async function loadWeather(){
-const url="https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=69.229&lon=17.981";
-const res=await fetch(url);
-const data=await res.json();
-const temp=data.properties.timeseries[0].data.instant.details.air_temperature;
-document.getElementById("weather").innerHTML="Finnsnes "+temp+"°C";
+updateClock()
+
+async function weather(){
+
+try{
+
+let res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=69.2296&longitude=17.9811&current_weather=true")
+
+let data = await res.json()
+
+let temp = data.current_weather.temperature
+
+document.getElementById("weather").innerHTML = "Finnsnes " + temp + "°C"
+
+}catch(e){}
+
 }
-loadWeather();
 
-
-let slideIndex=0;
-const slides=document.querySelectorAll(".slide");
-
-function showSlides(){
-slides.forEach(s=>s.style.display="none");
-slideIndex++;
-if(slideIndex>slides.length){slideIndex=1}
-slides[slideIndex-1].style.display="block";
-setTimeout(showSlides,10000);
-}
-showSlides();
+weather()
 
 </script>
 
