@@ -3,17 +3,17 @@
 <head>
 
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="600">
+<meta http-equiv="refresh" content="900">
 
-<title>Infoscreen</title>
+<title>Infoskjerm</title>
 
 <style>
 
 body{
 margin:0;
-background:#000;
+background:#050505;
 color:white;
-font-family:Arial, Helvetica, sans-serif;
+font-family:Segoe UI, Arial;
 overflow:hidden;
 }
 
@@ -21,52 +21,50 @@ overflow:hidden;
 position:absolute;
 width:100%;
 height:100%;
-padding:80px;
+padding:120px;
 box-sizing:border-box;
-display:none;
+opacity:0;
+transition:opacity 1.5s;
 }
 
-.active{
-display:block;
+.slide.active{
+opacity:1;
 }
 
 h1{
-font-size:64px;
+font-size:70px;
+font-weight:600;
 margin-bottom:20px;
 }
 
 h2{
-font-size:40px;
-margin-bottom:30px;
-}
-
-h3{
-font-size:30px;
-margin-top:30px;
+font-size:38px;
+margin-bottom:40px;
 }
 
 p,li{
-font-size:28px;
+font-size:30px;
 line-height:1.4;
 }
 
 ul{
-margin-left:40px;
+margin-left:50px;
 }
 
 #clock{
 position:absolute;
 top:40px;
-right:60px;
-font-size:48px;
-font-weight:bold;
+right:80px;
+font-size:60px;
+font-weight:600;
 }
 
 #weather{
 position:absolute;
 top:120px;
-right:60px;
+right:80px;
 font-size:28px;
+opacity:0.8;
 }
 
 .ticker{
@@ -75,7 +73,7 @@ bottom:0;
 width:100%;
 background:#111;
 font-size:26px;
-padding:15px;
+padding:16px;
 white-space:nowrap;
 overflow:hidden;
 }
@@ -83,7 +81,7 @@ overflow:hidden;
 .ticker span{
 display:inline-block;
 padding-left:100%;
-animation:scroll 30s linear infinite;
+animation:scroll 35s linear infinite;
 }
 
 @keyframes scroll{
@@ -104,17 +102,12 @@ animation:scroll 30s linear infinite;
 
 <div class="slide active">
 
-<h1>Welcome</h1>
+<h1>VELKOMMEN</h1>
+<h2>Bolig – Strandveien</h2>
 
-<h2>Industriveien 4</h2>
+<p>Manager Mobil: <b>99 10 10 41</b></p>
 
-<p>
-Manager Mobil: <b>+47 99 10 10 41</b>
-</p>
-
-<p>
-Vi ber alle vise hensyn til hverandre og bidra til et godt bomiljø.
-</p>
+<p>Vi ber alle vise hensyn til hverandre og bidra til et godt bomiljø.</p>
 
 </div>
 
@@ -124,12 +117,10 @@ Vi ber alle vise hensyn til hverandre og bidra til et godt bomiljø.
 
 <h1>WiFi Informasjon</h1>
 
-<p><b>WiFi:</b> Byggtema-Gjest</p>
-<p><b>Password:</b> Byggmester8o8</p>
+<p><b>WiFi:</b> BuildingGuest</p>
+<p><b>Password:</b> ********</p>
 
-<p>
-Kontakt manager dersom du opplever problemer med internett.
-</p>
+<p>Kontakt manager dersom du opplever problemer med internett.</p>
 
 </div>
 
@@ -138,12 +129,7 @@ Kontakt manager dersom du opplever problemer med internett.
 <div class="slide">
 
 <h1>SALMAR</h1>
-
 <h2>Creating a Safe and Respectful Living Environment</h2>
-
-<p>This applies to both accommodation rigs and apartments/housing.</p>
-
-<h3>Zero tolerance for:</h3>
 
 <ul>
 <li>Bullying and harassment</li>
@@ -153,15 +139,21 @@ Kontakt manager dersom du opplever problemer med internett.
 <li>Substance abuse that creates insecurity</li>
 </ul>
 
-<h3>Respect for Each Other</h3>
+</div>
+
+<!-- Slide 4 -->
+
+<div class="slide">
+
+<h1>Respect for Each Other</h1>
 
 <ul>
 <li>Show consideration in shared spaces</li>
-<li>Keep noise levels low during evenings and nights</li>
-<li>Clean up after yourself in common areas</li>
+<li>Keep noise levels low in evenings</li>
+<li>Clean up after yourself</li>
 <li>Respect privacy and personal boundaries</li>
-<li>Foster an inclusive and friendly environment</li>
-<li>Communicate openly and politely</li>
+<li>Foster an inclusive environment</li>
+<li>Communicate politely</li>
 </ul>
 
 </div>
@@ -170,55 +162,54 @@ Kontakt manager dersom du opplever problemer med internett.
 <span>
 Manager Mobil: 99 10 10 41 &nbsp;&nbsp; | &nbsp;&nbsp;
 Vis hensyn til andre beboere &nbsp;&nbsp; | &nbsp;&nbsp;
-WiFi: Byggtema-Gjest - Password: Byggmester8o8
+WiFi tilgjengelig i hele bygget
 </span>
 </div>
 
 <script>
 
-let slides = document.querySelectorAll(".slide")
-let index = 0
+let slides=document.querySelectorAll(".slide")
+let index=0
 
-setInterval(function(){
+setInterval(()=>{
 
 slides[index].classList.remove("active")
 
 index++
 
-if(index >= slides.length){
-index = 0
-}
+if(index>=slides.length){index=0}
 
 slides[index].classList.add("active")
 
-},10000)
+},12000)
 
-function updateClock(){
 
-let now = new Date()
+function clock(){
 
-let h = String(now.getHours()).padStart(2,"0")
-let m = String(now.getMinutes()).padStart(2,"0")
+let now=new Date()
 
-document.getElementById("clock").innerHTML = h + ":" + m
+let h=String(now.getHours()).padStart(2,"0")
+let m=String(now.getMinutes()).padStart(2,"0")
+
+document.getElementById("clock").innerHTML=h+":"+m
 
 }
 
-setInterval(updateClock,1000)
+setInterval(clock,1000)
+clock()
 
-updateClock()
 
 async function weather(){
 
 try{
 
-let res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=69.2296&longitude=17.9811&current_weather=true")
+let res=await fetch("https://api.open-meteo.com/v1/forecast?latitude=69.2296&longitude=17.9811&current_weather=true")
 
-let data = await res.json()
+let data=await res.json()
 
-let temp = data.current_weather.temperature
+let temp=data.current_weather.temperature
 
-document.getElementById("weather").innerHTML = "Finnsnes " + temp + "°C"
+document.getElementById("weather").innerHTML="Finnsnes "+temp+"°C"
 
 }catch(e){}
 
