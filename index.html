@@ -1,223 +1,39 @@
-<!DOCTYPE html>
-<html lang="no">
-<head>
-
-<meta charset="UTF-8">
-<meta http-equiv="refresh" content="900">
-
-<title>Infoskjerm</title>
-
-<style>
-
-body{
-margin:0;
-background:#050505;
-color:white;
-font-family:Segoe UI, Arial;
-overflow:hidden;
-}
-
-.slide{
-position:absolute;
-width:100%;
-height:100%;
-padding:120px;
-box-sizing:border-box;
-opacity:0;
-transition:opacity 1.5s;
-}
-
-.slide.active{
-opacity:1;
-}
-
-h1{
-font-size:70px;
-font-weight:600;
-margin-bottom:20px;
-}
-
-h2{
-font-size:38px;
-margin-bottom:40px;
-}
-
-p,li{
-font-size:30px;
-line-height:1.4;
-}
-
-ul{
-margin-left:50px;
-}
-
-#clock{
-position:absolute;
-top:40px;
-right:80px;
-font-size:60px;
-font-weight:600;
-}
-
-#weather{
-position:absolute;
-top:120px;
-right:80px;
-font-size:28px;
-opacity:0.8;
-}
-
-.ticker{
-position:absolute;
-bottom:0;
-width:100%;
-background:#111;
-font-size:26px;
-padding:16px;
-white-space:nowrap;
-overflow:hidden;
-}
-
-.ticker span{
-display:inline-block;
-padding-left:100%;
-animation:scroll 35s linear infinite;
-}
-
-@keyframes scroll{
-0%{transform:translateX(0);}
-100%{transform:translateX(-100%);}
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div id="clock"></div>
-<div id="weather"></div>
-
-<!-- Slide 1 -->
-
-<div class="slide active">
-
-<h1>VELKOMMEN</h1>
-<h2>Bolig – Strandveien</h2>
-
-<p>Manager Mobil: <b>99 10 10 41</b></p>
-
-<p>Vi ber alle vise hensyn til hverandre og bidra til et godt bomiljø.</p>
-
-</div>
-
-<!-- Slide 2 -->
-
-<div class="slide">
-
-<h1>WiFi Informasjon</h1>
-
-<p><b>WiFi:</b> BuildingGuest</p>
-<p><b>Password:</b> ********</p>
-
-<p>Kontakt manager dersom du opplever problemer med internett.</p>
-
-</div>
-
-<!-- Slide 3 -->
-
-<div class="slide">
-
-<h1>SALMAR</h1>
-<h2>Creating a Safe and Respectful Living Environment</h2>
-
-<ul>
-<li>Bullying and harassment</li>
-<li>Discrimination and racism</li>
-<li>Gender-based violence and unwanted sexual attention</li>
-<li>Violence and threats</li>
-<li>Substance abuse that creates insecurity</li>
-</ul>
-
-</div>
-
-<!-- Slide 4 -->
-
-<div class="slide">
-
-<h1>Respect for Each Other</h1>
-
-<ul>
-<li>Show consideration in shared spaces</li>
-<li>Keep noise levels low in evenings</li>
-<li>Clean up after yourself</li>
-<li>Respect privacy and personal boundaries</li>
-<li>Foster an inclusive environment</li>
-<li>Communicate politely</li>
-</ul>
-
-</div>
-
-<div class="ticker">
-<span>
-Manager Mobil: 99 10 10 41 &nbsp;&nbsp; | &nbsp;&nbsp;
-Vis hensyn til andre beboere &nbsp;&nbsp; | &nbsp;&nbsp;
-WiFi tilgjengelig i hele bygget
-</span>
-</div>
-
 <script>
 
-let slides=document.querySelectorAll(".slide")
-let index=0
+async function loadWeather(){
 
-setInterval(()=>{
+const url="https://api.open-meteo.com/v1/forecast?latitude=69.2296&longitude=17.9811&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto"
 
-slides[index].classList.remove("active")
+const res=await fetch(url)
+const data=await res.json()
 
-index++
+document.getElementById("tempNow").innerText =
+Math.round(data.current_weather.temperature)+"°C"
 
-if(index>=slides.length){index=0}
+document.getElementById("wind").innerText =
+data.current_weather.windspeed+" km/h"
 
-slides[index].classList.add("active")
+let forecastHTML=""
 
-},12000)
+for(let i=0;i<7;i++){
 
-
-function clock(){
-
-let now=new Date()
-
-let h=String(now.getHours()).padStart(2,"0")
-let m=String(now.getMinutes()).padStart(2,"0")
-
-document.getElementById("clock").innerHTML=h+":"+m
-
-}
-
-setInterval(clock,1000)
-clock()
-
-
-async function weather(){
-
-try{
-
-let res=await fetch("https://api.open-meteo.com/v1/forecast?latitude=69.2296&longitude=17.9811&current_weather=true")
-
-let data=await res.json()
-
-let temp=data.current_weather.temperature
-
-document.getElementById("weather").innerHTML="Finnsnes "+temp+"°C"
-
-}catch(e){}
+forecastHTML+=`
+<div class="day">
+<div class="day-name">${data.daily.time[i].slice(5)}</div>
+<div class="day-icon">☁️</div>
+<div class="day-temp">
+${Math.round(data.daily.temperature_2m_max[i])}° /
+${Math.round(data.daily.temperature_2m_min[i])}°
+</div>
+</div>
+`
 
 }
 
-weather()
+document.getElementById("forecast").innerHTML=forecastHTML
+
+}
+
+loadWeather()
 
 </script>
-
-</body>
-</html>
