@@ -33,12 +33,11 @@ width:100%;
 height:100%;
 padding:120px;
 box-sizing:border-box;
-opacity:0;
-transition:opacity 1.5s;
+display:none;
 }
 
 .slide.active{
-opacity:1;
+display:block;
 }
 
 h1{
@@ -69,19 +68,13 @@ width:100%;
 background:#111;
 font-size:26px;
 padding:16px;
-white-space:nowrap;
 overflow:hidden;
+white-space:nowrap;
 }
 
-.ticker span{
-display:inline-block;
-padding-left:100%;
-animation:scroll 40s linear infinite;
-}
-
-@keyframes scroll{
-0%{transform:translateX(0);}
-100%{transform:translateX(-100%);}
+#tickerText{
+position:relative;
+left:100%;
 }
 
 /* værpanel */
@@ -180,7 +173,6 @@ margin-top:10px;
 <div class="slide">
 
 <h1>SalMar</h1>
-<h2>Safe and Respectful Living</h2>
 
 <ul>
 <li>Bullying and harassment</li>
@@ -192,23 +184,7 @@ margin-top:10px;
 
 </div>
 
-<!-- Slide 4 -->
-
-<div class="slide">
-
-<h1>Respect for Each Other</h1>
-
-<ul>
-<li>Show consideration in shared spaces</li>
-<li>Keep noise levels low in evenings</li>
-<li>Clean up after yourself</li>
-<li>Respect privacy and personal boundaries</li>
-<li>Communicate politely</li>
-</ul>
-
-</div>
-
-<!-- Slide 5 vær -->
+<!-- Slide 4 vær -->
 
 <div class="slide weather-slide">
 
@@ -231,10 +207,8 @@ margin-top:10px;
 </div>
 
 <div class="ticker">
-<span>
-Manager Mobil: 99 10 10 41 &nbsp;&nbsp; | &nbsp;&nbsp;
-Vis hensyn til andre beboere &nbsp;&nbsp; | &nbsp;&nbsp;
-WiFi tilgjengelig i hele bygget
+<span id="tickerText">
+Manager Mobil: 99 10 10 41 | WiFi tilgjengelig i hele bygget | Vis hensyn til andre beboere
 </span>
 </div>
 
@@ -251,7 +225,7 @@ document.getElementById("clock").innerHTML=h+":"+m
 setInterval(clock,1000)
 clock()
 
-/* slides */
+/* slideshow */
 
 let slides=document.querySelectorAll(".slide")
 let index=0
@@ -259,6 +233,7 @@ let index=0
 setInterval(()=>{
 
 slides[index].classList.remove("active")
+
 index++
 
 if(index>=slides.length){index=0}
@@ -266,6 +241,27 @@ if(index>=slides.length){index=0}
 slides[index].classList.add("active")
 
 },12000)
+
+/* ticker scrolling */
+
+let ticker=document.getElementById("tickerText")
+let pos=window.innerWidth
+
+function scrollTicker(){
+
+pos -= 1
+
+if(pos < -ticker.offsetWidth){
+pos = window.innerWidth
+}
+
+ticker.style.left = pos + "px"
+
+requestAnimationFrame(scrollTicker)
+
+}
+
+scrollTicker()
 
 /* vær */
 
