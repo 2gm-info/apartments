@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="no">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Strandveien 112 Infoskjerm</title>
+<title>Strandveien 112 Info Screen</title>
 
 <style>
 body {
@@ -29,9 +29,7 @@ body {
     box-sizing: border-box;
 }
 
-.page.active {
-    display: block;
-}
+.page.active { display: block; }
 
 .grid {
     display: grid;
@@ -89,7 +87,6 @@ body {
     100% { transform: translateX(-100%); }
 }
 
-/* BILDE-SIDE */
 .slideshow {
     width: 100%;
     height: 100%;
@@ -97,11 +94,7 @@ body {
     flex-direction: column;
 }
 
-.slide {
-    flex: 1;
-    display: none;
-}
-
+.slide { flex: 1; display: none; }
 .slide.active { display: block; }
 
 .slide img {
@@ -118,7 +111,7 @@ body {
 
 <div class="container">
 
-    <!-- SIDE 1 (INFO) -->
+    <!-- PAGE 1 (INFO) -->
     <div class="page active">
         <div class="grid">
             <div class="header">
@@ -126,21 +119,21 @@ body {
                 <div class="clock" id="clock"></div>
             </div>
 
-            <div class="card"><div class="card-content"><h2>WiFi</h2><div class="big">SV112_Gjest</div><div>Passord: 12345678</div></div></div>
-            <div class="card"><div class="card-content"><h2>Kontakt</h2><div class="big">+47 000 00 000</div></div></div>
-            <div class="card"><div class="card-content"><h2>Utsjekk</h2><div class="big">12:00</div></div></div>
+            <div class="card"><div class="card-content"><h2>WiFi</h2><div class="big">SV112_Guest</div><div>Password: 12345678</div></div></div>
+            <div class="card"><div class="card-content"><h2>Contact</h2><div class="big">+47 000 00 000</div></div></div>
+            <div class="card"><div class="card-content"><h2>Check-out</h2><div class="big">12:00</div></div></div>
 
-            <div class="card"><div class="card-content"><h2>Vask</h2><div class="big">Man / Ons / Fre</div></div></div>
-            <div class="card"><div class="card-content"><h2>Regler</h2><div class="big">Ingen røyking</div></div></div>
-            <div class="card"><div class="card-content"><h2>Status</h2><div class="big">ALT OK</div></div></div>
+            <div class="card"><div class="card-content"><h2>Cleaning</h2><div class="big">Mon / Wed / Fri</div></div></div>
+            <div class="card"><div class="card-content"><h2>Rules</h2><div class="big">No smoking</div></div></div>
+            <div class="card"><div class="card-content"><h2>Status</h2><div class="big">ALL OK</div></div></div>
 
             <div class="footer">
-                <div class="ticker">🔔 Velkommen &nbsp; | &nbsp; 📶 WiFi: SV112_Gjest &nbsp; | &nbsp; 🚭 Røyking forbudt &nbsp; | &nbsp; 📞 Kontakt ved behov</div>
+                <div class="ticker">🔔 Welcome &nbsp; | &nbsp; 📶 WiFi: SV112_Guest &nbsp; | &nbsp; 🚭 No smoking indoors &nbsp; | &nbsp; 📞 Contact if needed</div>
             </div>
         </div>
     </div>
 
-    <!-- SIDE 2 (BILDER) -->
+    <!-- PAGE 2 (IMAGES) -->
     <div class="page">
         <div class="slideshow">
             <div class="slide active"><img src="https://picsum.photos/1920/1080?1"></div>
@@ -152,7 +145,6 @@ body {
 </div>
 
 <script>
-// KLOKKE
 function updateClock() {
     const now = new Date();
     document.getElementById('clock').innerText = now.toLocaleTimeString();
@@ -160,7 +152,6 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 
-// SIDE ROTASJON (10 sek)
 let pages = document.querySelectorAll('.page');
 let currentPage = 0;
 
@@ -170,7 +161,6 @@ setInterval(() => {
     pages[currentPage].classList.add('active');
 }, 10000);
 
-// BILDE ROTASJON (5 sek internt)
 let slides = document.querySelectorAll('.slide');
 let currentSlide = 0;
 
@@ -179,8 +169,8 @@ setInterval(() => {
     currentSlide = (currentSlide + 1) % slides.length;
     slides[currentSlide].classList.add('active');
 }, 5000);
-
 </script>
 
 </body>
 </html>
+
