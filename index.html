@@ -1,142 +1,101 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<meta http-equiv="refresh" content="300">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1920, initial-scale=1">
-<title>Infoscreen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Strandveien 112 Infoskjerm</title>
 
 <style>
-
-body{
-margin:0;
-background:#050505;
-color:white;
-font-family:Segoe UI, Arial;
-overflow:hidden;
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #000428, #004e92);
+    color: white;
+    overflow: hidden;
 }
 
-/* klokke */
-
-#clock{
-position:absolute;
-top:40px;
-right:60px;
-font-size:60px;
-font-weight:600;
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 120px auto 70px;
+    height: 100vh;
+    gap: 12px;
+    padding: 12px;
 }
 
-/* slides */
-
-.slide{
-position:absolute;
-width:100%;
-height:100%;
-padding:120px;
-box-sizing:border-box;
-display:none;
+.header {
+    grid-column: span 3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 2.2em;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    box-shadow: 0 0 30px rgba(0,150,255,0.5);
 }
 
-.slide.active{
-display:block;
+.card {
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 25px rgba(0,200,255,0.3);
+    position: relative;
+    overflow: hidden;
 }
 
-h1{
-font-size:70px;
-margin-bottom:20px;
+.card::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(circle, rgba(0,255,255,0.15), transparent);
+    animation: spin 10s linear infinite;
 }
 
-h2{
-font-size:40px;
-margin-bottom:30px;
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-p,li{
-font-size:30px;
-line-height:1.4;
+.card-content {
+    position: relative;
+    z-index: 2;
 }
 
-ul{
-margin-left:40px;
+.big {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #00ffff;
 }
 
-/* ticker */
-
-.ticker{
-position:absolute;
-bottom:0;
-width:100%;
-background:#111;
-font-size:26px;
-padding:16px;
-overflow:hidden;
-white-space:nowrap;
+.clock {
+    font-size: 1.5em;
 }
 
-#tickerText{
-position:relative;
-left:100%;
+/* SCROLLER */
+.footer {
+    grid-column: span 3;
+    background: black;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,255,255,0.4);
 }
 
-/* værpanel */
-
-.weather-slide{
-background:linear-gradient(#5fa3e0,#6fa6d6);
+.ticker {
+    white-space: nowrap;
+    font-size: 1.4em;
+    padding-left: 100%;
+    animation: scroll 25s linear infinite;
 }
 
-.weather-main{
-text-align:center;
-}
-
-.location{
-font-size:30px;
-opacity:0.9;
-}
-
-.weather-icon{
-font-size:80px;
-margin:20px;
-}
-
-.temp{
-font-size:100px;
-font-weight:600;
-}
-
-.weather-extra{
-font-size:26px;
-opacity:0.8;
-}
-
-.forecast{
-display:flex;
-justify-content:space-between;
-background:rgba(0,0,0,0.15);
-border-radius:20px;
-padding:30px;
-margin-top:50px;
-}
-
-.day{
-text-align:center;
-width:14%;
-}
-
-.day-name{
-font-size:22px;
-margin-bottom:10px;
-}
-
-.day-icon{
-font-size:36px;
-}
-
-.day-temp{
-font-size:22px;
-margin-top:10px;
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
 }
 
 </style>
@@ -144,167 +103,71 @@ margin-top:10px;
 
 <body>
 
-<div id="clock"></div>
+<div class="container">
 
-<!-- Slide 1 -->
+    <div class="header">
+        <div>Strandveien 112</div>
+        <div class="clock" id="clock"></div>
+    </div>
 
-<div class="slide active">
+    <div class="card">
+        <div class="card-content">
+            <h2>Velkommen</h2>
+            <div class="big">👋</div>
+        </div>
+    </div>
 
-<h1>Welcome to Strandveien 112</h1>
-<h2></h2>
+    <div class="card">
+        <div class="card-content">
+            <h2>WiFi</h2>
+            <div class="big">SV112_Gjest</div>
+            <div>Passord: 12345678</div>
+        </div>
+    </div>
 
-<p>Manager Mobil: <b>99 10 10 41</b></p>
+    <div class="card">
+        <div class="card-content">
+            <h2>Kontakt</h2>
+            <div class="big">+47 000 00 000</div>
+        </div>
+    </div>
 
-<p>Vi ber alle vise hensyn til hverandre og bidra til et godt bomiljø.</p>
+    <div class="card">
+        <div class="card-content">
+            <h2>Vask</h2>
+            <div class="big">Man / Ons / Fre</div>
+        </div>
+    </div>
 
-</div>
+    <div class="card">
+        <div class="card-content">
+            <h2>Utsjekk</h2>
+            <div class="big">12:00</div>
+        </div>
+    </div>
 
-<!-- Slide 2 -->
+    <div class="card">
+        <div class="card-content">
+            <h2>Status</h2>
+            <div class="big">ALT OK</div>
+        </div>
+    </div>
 
-<div class="slide">
+    <div class="footer">
+        <div class="ticker">
+            🔔 Velkommen til Strandveien 112 &nbsp;&nbsp; | &nbsp;&nbsp; 📶 WiFi: SV112_Gjest &nbsp;&nbsp; | &nbsp;&nbsp; 🚿 Husk å lufte etter dusj &nbsp;&nbsp; | &nbsp;&nbsp; 🚭 Røyking forbudt inne &nbsp;&nbsp; | &nbsp;&nbsp; 🧹 Vask: Man / Ons / Fre &nbsp;&nbsp; | &nbsp;&nbsp; 📞 Kontakt: +47 000 00 000
+        </div>
+    </div>
 
-<h1>WiFi Info</h1>
-
-<p><b>WiFi:</b> Hybel 4-7</p>
-<p><b>Password:</b> ********</p>
-
-<p>Kontakt manager dersom du opplever problemer.</p>
-
-</div>
-
-<!-- Slide 3 -->
-
-<div class="slide">
-
-<h1>SalMar</h1>
-
-<ul>
-<li>Bullying and harassment</li>
-<li>Discrimination and racism</li>
-<li>Gender-based violence</li>
-<li>Violence and threats</li>
-<li>Substance abuse creating insecurity</li>
-</ul>
-
-</div>
-
-<!-- Slide 4 vær -->
-
-<div class="slide weather-slide">
-
-<div class="weather-main">
-
-<div class="location">Finnsnes</div>
-
-<div class="weather-icon"></div>
-
-<div class="temp" id="tempNow">--°C</div>
-
-<div class="weather-extra">
-<span id="wind">-- m/s</span>
-</div>
-
-</div>
-
-<div class="forecast" id="forecast"></div>
-
-</div>
-
-<div class="ticker">
-<span id="tickerText">
-Manager Mobil: 99 10 10 41 
-</span>
 </div>
 
 <script>
-
-/* klokke */
-
-function clock(){
-let now=new Date()
-let h=String(now.getHours()).padStart(2,"0")
-let m=String(now.getMinutes()).padStart(2,"0")
-document.getElementById("clock").innerHTML=h+":"+m
+function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').innerText = now.toLocaleTimeString();
 }
-setInterval(clock,1000)
-clock()
-
-/* slideshow */
-
-let slides=document.querySelectorAll(".slide")
-let index=0
-
-setInterval(()=>{
-
-slides[index].classList.remove("active")
-
-index++
-
-if(index>=slides.length){index=0}
-
-slides[index].classList.add("active")
-
-},12000)
-
-/* ticker scrolling */
-
-let ticker=document.getElementById("tickerText")
-let pos=window.innerWidth
-
-function scrollTicker(){
-
-pos -= 1
-
-if(pos < -ticker.offsetWidth){
-pos = window.innerWidth
-}
-
-ticker.style.left = pos + "px"
-
-requestAnimationFrame(scrollTicker)
-
-}
-
-scrollTicker()
-
-/* vær */
-
-async function loadWeather(){
-
-const url="https://api.open-meteo.com/v1/forecast?latitude=69.2296&longitude=17.9811&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto"
-
-const res=await fetch(url)
-const data=await res.json()
-
-document.getElementById("tempNow").innerText =
-Math.round(data.current_weather.temperature)+"°C"
-
-document.getElementById("wind").innerText =
-data.current_weather.windspeed+" km/h"
-
-let forecastHTML=""
-
-for(let i=0;i<7;i++){
-
-forecastHTML+=`
-<div class="day">
-<div class="day-name">${data.daily.time[i].slice(5)}</div>
-<div class="day-icon">☁️</div>
-<div class="day-temp">
-${Math.round(data.daily.temperature_2m_max[i])}° /
-${Math.round(data.daily.temperature_2m_min[i])}°
-</div>
-</div>
-`
-
-}
-
-document.getElementById("forecast").innerHTML=forecastHTML
-
-}
-
-loadWeather()
-
+setInterval(updateClock, 1000);
+updateClock();
 </script>
 
 </body>
