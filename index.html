@@ -6,177 +6,105 @@
 <title>Strandveien 112 Info Screen</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #000428, #004e92);
-    color: white;
-    overflow: hidden;
-}
-
-.container {
-    height: 100vh;
-    width: 100vw;
-    position: relative;
-}
-
-.page {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: none;
-    padding: 12px;
-    box-sizing: border-box;
-}
-
-.page.active { display: block; }
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 120px auto 70px;
-    height: 100%;
-    gap: 12px;
-}
-
-.header {
-    grid-column: span 3;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 2.2em;
-    padding: 20px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.05);
-    box-shadow: 0 0 30px rgba(0,150,255,0.5);
-}
-
-.card {
-    background: rgba(255,255,255,0.05);
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 0 25px rgba(0,200,255,0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-.card-content { position: relative; z-index: 2; }
-
-.big { font-size: 2.5em; font-weight: bold; color: #00ffff; }
-.clock { font-size: 1.5em; }
-
-.footer {
-    grid-column: span 3;
-    background: black;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(0,255,255,0.4);
-}
-
-.ticker {
-    white-space: nowrap;
-    font-size: 1.4em;
-    padding-left: 100%;
-    animation: scroll 25s linear infinite;
-}
-
-@keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-}
-
-.slideshow {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.slide { flex: 1; display: none; }
-.slide.active { display: block; }
-
-.slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 20px;
-}
-
+body { margin:0; font-family:'Segoe UI',sans-serif; background:linear-gradient(135deg,#000428,#004e92); color:white; overflow:hidden; }
+.container { height:100vh; width:100vw; position:relative; }
+.page { position:absolute; width:100%; height:100%; display:none; padding:12px; box-sizing:border-box; }
+.page.active { display:block; }
+.grid { display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:120px auto 70px; height:100%; gap:12px; }
+.header { grid-column:span 3; display:flex; justify-content:space-between; align-items:center; font-size:2.2em; padding:20px; border-radius:20px; background:rgba(255,255,255,0.05); box-shadow:0 0 30px rgba(0,150,255,0.5); }
+.card { background:rgba(255,255,255,0.05); border-radius:20px; padding:20px; box-shadow:0 0 25px rgba(0,200,255,0.3); }
+.big { font-size:2.5em; font-weight:bold; color:#00ffff; }
+.footer { grid-column:span 3; background:black; border-radius:15px; display:flex; align-items:center; overflow:hidden; }
+.ticker { white-space:nowrap; font-size:1.4em; padding-left:100%; animation:scroll 25s linear infinite; }
+@keyframes scroll {0%{transform:translateX(0);}100%{transform:translateX(-100%);}}
+.slideshow { width:100%; height:100%; }
+.slide { display:none; height:100%; }
+.slide.active { display:block; }
+.slide img { width:100%; height:100%; object-fit:cover; border-radius:20px; }
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
-    <!-- PAGE 1 (INFO) -->
-    <div class="page active">
-        <div class="grid">
-            <div class="header">
-                <div>Strandveien 112</div>
-                <div class="clock" id="clock"></div>
-            </div>
+<div class="page active">
+<div class="grid">
+<div class="header"><div>Strandveien 112</div><div id="clock"></div></div>
 
-            <div class="card"><div class="card-content"><h2>WiFi</h2><div class="big">SV112_Guest</div><div>Password: 12345678</div></div></div>
-            <div class="card"><div class="card-content"><h2>Contact</h2><div class="big">+47 000 00 000</div></div></div>
-            <div class="card"><div class="card-content"><h2>Check-out</h2><div class="big">12:00</div></div></div>
+<div class="card"><h2>WiFi</h2><div class="big" id="wifi">-</div><div id="wifiPass"></div></div>
+<div class="card"><h2>Contact</h2><div class="big" id="contact">-</div></div>
+<div class="card"><h2>Check-out</h2><div class="big" id="checkout">-</div></div>
 
-            <div class="card"><div class="card-content"><h2>Cleaning</h2><div class="big">Mon / Wed / Fri</div></div></div>
-            <div class="card"><div class="card-content"><h2>Rules</h2><div class="big">No smoking</div></div></div>
-            <div class="card"><div class="card-content"><h2>Status</h2><div class="big">ALL OK</div></div></div>
+<div class="card"><h2>Cleaning</h2><div class="big" id="cleaning">-</div></div>
+<div class="card"><h2>Rules</h2><div class="big" id="rules">-</div></div>
+<div class="card"><h2>Status</h2><div class="big" id="status">-</div></div>
 
-            <div class="footer">
-                <div class="ticker">🔔 Welcome &nbsp; | &nbsp; 📶 WiFi: SV112_Guest &nbsp; | &nbsp; 🚭 No smoking indoors &nbsp; | &nbsp; 📞 Contact if needed</div>
-            </div>
-        </div>
-    </div>
+<div class="footer"><div class="ticker" id="ticker">Loading...</div></div>
+</div>
+</div>
 
-    <!-- PAGE 2 (IMAGES) -->
-    <div class="page">
-        <div class="slideshow">
-            <div class="slide active"><img src="https://picsum.photos/1920/1080?1"></div>
-            <div class="slide"><img src="https://picsum.photos/1920/1080?2"></div>
-            <div class="slide"><img src="https://picsum.photos/1920/1080?3"></div>
-        </div>
-    </div>
+<div class="page">
+<div class="slideshow" id="slideshow"></div>
+</div>
 
 </div>
 
 <script>
-function updateClock() {
-    const now = new Date();
-    document.getElementById('clock').innerText = now.toLocaleTimeString();
+// CLOCK
+setInterval(()=>{
+ document.getElementById('clock').innerText=new Date().toLocaleTimeString();
+},1000);
+
+// PAGE ROTATION
+let pages=document.querySelectorAll('.page');
+let p=0;
+setInterval(()=>{
+ pages[p].classList.remove('active');
+ p=(p+1)%pages.length;
+ pages[p].classList.add('active');
+},10000);
+
+// LOAD DATA (JSON)
+async function loadData(){
+ try{
+  const res=await fetch('data.json?t='+Date.now());
+  const d=await res.json();
+
+  document.getElementById('wifi').innerText=d.wifi;
+  document.getElementById('wifiPass').innerText='Password: '+d.password;
+  document.getElementById('contact').innerText=d.contact;
+  document.getElementById('checkout').innerText=d.checkout;
+  document.getElementById('cleaning').innerText=d.cleaning;
+  document.getElementById('rules').innerText=d.rules;
+  document.getElementById('status').innerText=d.status;
+  document.getElementById('ticker').innerText=d.ticker;
+
+  // IMAGES
+  let slideContainer=document.getElementById('slideshow');
+  slideContainer.innerHTML='';
+  d.images.forEach((img,i)=>{
+    let div=document.createElement('div');
+    div.className='slide'+(i===0?' active':'');
+    div.innerHTML=`<img src="${img}">`;
+    slideContainer.appendChild(div);
+  });
+
+  // SLIDE ROTATION
+  let slides=document.querySelectorAll('.slide');
+  let s=0;
+  setInterval(()=>{
+    slides[s].classList.remove('active');
+    s=(s+1)%slides.length;
+    slides[s].classList.add('active');
+  },5000);
+
+ }catch(e){console.log('Load error',e);}
 }
-setInterval(updateClock, 1000);
-updateClock();
 
-let pages = document.querySelectorAll('.page');
-let currentPage = 0;
-
-setInterval(() => {
-    pages[currentPage].classList.remove('active');
-    currentPage = (currentPage + 1) % pages.length;
-    pages[currentPage].classList.add('active');
-}, 10000);
-
-let slides = document.querySelectorAll('.slide');
-let currentSlide = 0;
-
-setInterval(() => {
-    slides[currentSlide].classList.remove('active');
-    currentSlide = (currentSlide + 1) % slides.length;
-    slides[currentSlide].classList.add('active');
-}, 5000);
-
-// AUTO RELOAD EVERY 5 MINUTES (300000 ms)
-setInterval(() => {
-    location.reload();
-}, 300000);
+loadData();
+setInterval(loadData,60000); // refresh data every minute
 
 </script>
-
 </body>
 </html>
 
