@@ -31,6 +31,29 @@ function showSlide() {
   index = (index + 1) % slides.length;
 }
 
+/* 🔥 HENT VÆR FAST (ikke bare på slide) */
+async function fetchWeatherOnly() {
+  try {
+    const res = await fetch(
+      "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=69.23&lon=17.98",
+      {
+        headers: {
+          "User-Agent": "infoscreen/1.0 github-pages"
+        }
+      }
+    );
+
+    const data = await res.json();
+    const temp = data.properties.timeseries[0].data.instant.details.air_temperature;
+
+    currentTemp = temp;
+    updateTopbar();
+
+  } catch (err) {
+    console.error("Feil ved vær (topbar):", err);
+  }
+}
+
 async function loadWeather() {
   try {
     const res = await fetch(
@@ -43,8 +66,8 @@ async function loadWeather() {
     );
 
     const data = await res.json();
-
     const temp = data.properties.timeseries[0].data.instant.details.air_temperature;
+
     currentTemp = temp;
 
     document.getElementById("slide").innerHTML = `
@@ -66,7 +89,7 @@ function updateTopbar() {
   document.getElementById("top-left").innerText = `Finnsnes ${currentTemp}°C`;
 }
 
-/* CLOCK + DATE SPLIT */
+/* CLOCK + DATE */
 function updateClock() {
   const now = new Date();
 
@@ -85,19 +108,14 @@ function updateClock() {
   document.getElementById("top-right").innerText = date;
 }
 
+/* INTERVALS */
 setInterval(updateClock, 1000);
-updateClock();
-
-/* SLIDES */
 setInterval(showSlide, 10000);
-
-/* DATA REFRESH */
 setInterval(loadData, 60000);
-
-/* FULL RELOAD */
-setInterval(() => {
-  location.reload();
-}, 100000);
+setInterval(fetchWeatherOnly, 600000); // hvert 10 min
+setInterval(() => location.reload(), 100000);
 
 /* START */
+updateClock();
+fetchWeatherOnly();
 loadData();
