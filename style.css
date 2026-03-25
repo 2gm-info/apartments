@@ -37,3 +37,20 @@
   font-size: 20px;
   white-space: nowrap;
 }
+
+#slide {
+  margin-top: 70px;
+  height: calc(100vh - 140px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+  font-size: 48px;
+}
+
+#slide * {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
