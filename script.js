@@ -9,7 +9,7 @@ async function loadData() {
     slides = data.slides;
     document.getElementById("ticker-text").innerText = data.ticker;
 
-    showSlide(); // Vis første slide med en gang
+    showSlide();
 
   } catch (err) {
     console.error("Feil ved lasting av data.json:", err);
@@ -52,21 +52,45 @@ async function loadWeather() {
       </div>
     `;
 
+    // 🔥 Oppdater topbar temperatur
+    document.getElementById("top-right").innerText = temp + "°C";
+
   } catch (err) {
     console.error("Feil ved lasting av værdata:", err);
   }
 }
 
-// Bytt slide hvert 10 sek
+/* CLOCK + DATE */
+function updateClock() {
+  const now = new Date();
+
+  const time = now.toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+
+  const date = now.toLocaleDateString("en-GB", {
+    weekday: "long",
+    day: "numeric",
+    month: "long"
+  });
+
+  document.getElementById("top-center").innerText = `${date} | ${time}`;
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+/* SLIDES */
 setInterval(showSlide, 10000);
 
-// Oppdater JSON hvert minutt
+/* DATA REFRESH */
 setInterval(loadData, 60000);
 
-// FULL refresh hvert 5 min (viktig for Pi)
+/* FULL PAGE RELOAD (Pi stability) */
 setInterval(() => {
   location.reload();
 }, 300000);
 
-// Start
+/* START */
 loadData();
