@@ -9,6 +9,8 @@ async function loadData() {
     slides = data.slides;
     document.getElementById("ticker-text").innerText = data.ticker;
 
+    showSlide(); // Vis første slide med en gang
+
   } catch (err) {
     console.error("Feil ved lasting av data.json:", err);
   }
@@ -61,11 +63,10 @@ setInterval(showSlide, 10000);
 // Oppdater JSON hvert minutt
 setInterval(loadData, 60000);
 
-// FULL refresh hvert 5 min
+// FULL refresh hvert 5 min (viktig for Pi)
 setInterval(() => {
   location.reload();
 }, 300000);
 
 // Start
 loadData();
-setTimeout(showSlide, 1000);
