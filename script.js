@@ -1,5 +1,6 @@
 let slides = [];
 let index = 0;
+let currentTemp = "--";
 
 async function loadData() {
   try {
@@ -44,6 +45,7 @@ async function loadWeather() {
     const data = await res.json();
 
     const temp = data.properties.timeseries[0].data.instant.details.air_temperature;
+    currentTemp = temp;
 
     document.getElementById("slide").innerHTML = `
       <div>
@@ -52,12 +54,16 @@ async function loadWeather() {
       </div>
     `;
 
-    // 🔥 Oppdater topbar temperatur
-    document.getElementById("top-right").innerText = temp + "°C";
+    updateTopbar();
 
   } catch (err) {
     console.error("Feil ved lasting av værdata:", err);
   }
+}
+
+/* TOPBAR UPDATE */
+function updateTopbar() {
+  document.getElementById("top-left").innerText = `Finnsnes ${currentTemp}°C`;
 }
 
 /* CLOCK + DATE */
@@ -87,7 +93,7 @@ setInterval(showSlide, 10000);
 /* DATA REFRESH */
 setInterval(loadData, 60000);
 
-/* FULL PAGE RELOAD (Pi stability) */
+/* FULL RELOAD */
 setInterval(() => {
   location.reload();
 }, 300000);
