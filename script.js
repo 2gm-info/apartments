@@ -61,7 +61,7 @@ setInterval(showSlide, 10000);
 // Oppdater JSON hvert minutt
 setInterval(loadData, 60000);
 
-// FULL refresh hvert 5 min (viktig for Pi)
+// FULL refresh hvert 5 min
 setInterval(() => {
   location.reload();
 }, 300000);
