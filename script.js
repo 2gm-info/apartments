@@ -96,7 +96,7 @@ setInterval(loadData, 60000);
 /* FULL RELOAD */
 setInterval(() => {
   location.reload();
-}, 300000);
+}, 100000);
 
 /* START */
 loadData();
