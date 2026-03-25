@@ -6,8 +6,25 @@ body {
   overflow: hidden;
 }
 
+/* TOP BAR */
+.topbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  background: #111;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  font-size: 1.5em;
+  z-index: 10;
+}
+
+/* SLIDE AREA */
 #slide {
-  height: 90vh;
+  margin-top: 60px;
+  height: calc(90vh - 60px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,6 +34,7 @@ body {
   line-height: 1.4;
 }
 
+/* TICKER */
 .ticker {
   position: fixed;
   bottom: 0;
