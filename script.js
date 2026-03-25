@@ -41,5 +41,8 @@ async function loadWeather() {
 
 setInterval(showSlide, 10000);
 setInterval(loadData, 60000);
+setInterval(() => {
+  location.reload();
+}, 300000); // hvert 5 minutt
 
 loadData();
