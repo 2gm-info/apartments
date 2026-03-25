@@ -21,6 +21,10 @@ body {
   z-index: 10;
 }
 
+#top-left {
+  font-weight: bold;
+}
+
 /* SLIDE AREA */
 #slide {
   margin-top: 60px;
