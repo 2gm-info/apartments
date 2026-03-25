@@ -61,12 +61,12 @@ async function loadWeather() {
   }
 }
 
-/* TOPBAR UPDATE */
+/* TOPBAR */
 function updateTopbar() {
   document.getElementById("top-left").innerText = `Finnsnes ${currentTemp}°C`;
 }
 
-/* CLOCK + DATE */
+/* CLOCK + DATE SPLIT */
 function updateClock() {
   const now = new Date();
 
@@ -81,7 +81,8 @@ function updateClock() {
     month: "long"
   });
 
-  document.getElementById("top-center").innerText = `${date} | ${time}`;
+  document.getElementById("top-center").innerText = time;
+  document.getElementById("top-right").innerText = date;
 }
 
 setInterval(updateClock, 1000);
