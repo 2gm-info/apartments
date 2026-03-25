@@ -25,7 +25,7 @@ function showSlide() {
   if (s.type === "weather") {
     loadWeather();
   } else {
-    document.getElementById("slide").innerHTML = s.content;
+    document.getElementById("slide").innerHTML = `<div class="slide-inner">${s.content}</div>`;
   }
 
   index = (index + 1) % slides.length;
