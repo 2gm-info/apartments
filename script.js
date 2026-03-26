@@ -2,6 +2,7 @@ let slides = [];
 let index = 0;
 let currentTemp = "--";
 
+/* LOAD DATA */
 async function loadData() {
   const res = await fetch("data.json?nocache=" + new Date().getTime());
   const data = await res.json();
@@ -12,6 +13,7 @@ async function loadData() {
   showSlide();
 }
 
+/* FADE FUNCTION */
 function fadeTo(content) {
   const el = document.getElementById("slide");
 
@@ -21,7 +23,7 @@ function fadeTo(content) {
   setTimeout(() => {
     el.innerHTML = `<div class="slide-inner">${content}</div>`;
 
-    // 🔥 force repaint (kritisk)
+    // force repaint (kritisk)
     void el.offsetWidth;
 
     // fade inn
@@ -29,13 +31,14 @@ function fadeTo(content) {
   }, 400);
 }
 
+/* SHOW SLIDE */
 function showSlide() {
   if (!slides.length) return;
 
   const s = slides[index];
 
   if (s.type === "weather") {
-    loadWeather();
+    loadWeatherSlide();
   } else {
     fadeTo(s.content);
   }
@@ -43,27 +46,56 @@ function showSlide() {
   index = (index + 1) % slides.length;
 }
 
-async function loadWeather() {
-  const res = await fetch(
-    "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=69.23&lon=17.98",
-    {
-      headers: {
-        "User-Agent": "infoscreen/1.0"
+/* WEATHER SLIDE */
+async function loadWeatherSlide() {
+  try {
+    const res = await fetch(
+      "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=69.23&lon=17.98",
+      {
+        headers: {
+          "User-Agent": "infoscreen/1.0"
+        }
       }
-    }
-  );
+    );
 
-  const data = await res.json();
-  const temp = data.properties.timeseries[0].data.instant.details.air_temperature;
+    const data = await res.json();
+    const temp = data.properties.timeseries[0].data.instant.details.air_temperature;
 
-  currentTemp = temp;
+    currentTemp = temp;
 
-  fadeTo(`
-    <h1>Finnsnes</h1>
-    <p>${temp}°C</p>
-  `);
+    fadeTo(`
+      <h1>Finnsnes</h1>
+      <p>${temp}°C</p>
+    `);
 
-  updateTopbar();
+    updateTopbar();
+
+  } catch (err) {
+    console.error("Weather slide error:", err);
+  }
+}
+
+/* 🔥 WEATHER FOR TOPBAR (uavhengig av slides) */
+async function fetchWeatherForTopbar() {
+  try {
+    const res = await fetch(
+      "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=69.23&lon=17.98",
+      {
+        headers: {
+          "User-Agent": "infoscreen/1.0"
+        }
+      }
+    );
+
+    const data = await res.json();
+    const temp = data.properties.timeseries[0].data.instant.details.air_temperature;
+
+    currentTemp = temp;
+    updateTopbar();
+
+  } catch (err) {
+    console.error("Topbar weather error:", err);
+  }
 }
 
 /* TOPBAR */
@@ -71,7 +103,7 @@ function updateTopbar() {
   document.getElementById("top-left").innerText = `Finnsnes ${currentTemp}°C`;
 }
 
-/* CLOCK */
+/* CLOCK + DATE */
 function updateClock() {
   const now = new Date();
 
@@ -83,11 +115,13 @@ function updateClock() {
 }
 
 /* INTERVALS */
-setInterval(showSlide, 15000);
-setInterval(loadData, 60000);
-setInterval(updateClock, 1000);
-setInterval(() => location.reload(), 100000);
+setInterval(showSlide, 15000);              // slides
+setInterval(loadData, 60000);               // data refresh
+setInterval(updateClock, 1000);             // klokke
+setInterval(fetchWeatherForTopbar, 600000); // temp hvert 10 min
+setInterval(() => location.reload(), 300000); // reload 5 min
 
 /* START */
 updateClock();
+fetchWeatherForTopbar(); // 🔥 viktig
 loadData();
