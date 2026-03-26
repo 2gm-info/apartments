@@ -83,6 +83,19 @@ body {
   margin-bottom: 30px;
   text-align: center;
 }
+#slide ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 38px;
+  line-height: 1.6;
+  max-width: 900px;
+}
+
+#slide li {
+  margin: 10px 0;
+}
+
 /* TEKST */
 #slide p {
   font-size: 42px;
