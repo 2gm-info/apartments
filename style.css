@@ -68,9 +68,8 @@ body {
 /* INNER CONTENT */
 .slide-inner {
   width: 100%;
-  max-width: none;          /* viktig – fjerner begrensning */
-  padding: 0 60px;          /* gir luft på sidene */
-  box-sizing: border-box;
+  max-width: 1400px;   /* øk fra 900 → 1400 */
+  margin: 0 auto;
   text-align: center;
 }
 
