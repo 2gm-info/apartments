@@ -1,3 +1,4 @@
+/* BASE */
 body {
   margin: 0;
   background: #0a0a0a;
@@ -24,6 +25,7 @@ body {
   z-index: 10;
 }
 
+/* LEFT (temp) */
 #top-left {
   justify-self: start;
   font-size: 24px;
@@ -31,19 +33,22 @@ body {
   white-space: nowrap;
 }
 
+/* CENTER (clock) */
 #top-center {
   justify-self: center;
   font-size: 34px;
   font-weight: bold;
+  letter-spacing: 1px;
 }
 
+/* RIGHT (date) */
 #top-right {
   justify-self: end;
   font-size: 20px;
   white-space: nowrap;
 }
 
-/* SLIDE */
+/* SLIDE AREA */
 #slide {
   margin-top: 70px;
   height: calc(100vh - 140px);
@@ -52,33 +57,30 @@ body {
   align-items: center;
   text-align: center;
   padding: 40px;
+
   font-size: 48px;
+
+  /* 🔥 FADE */
   opacity: 1;
-  transition: opacity 1.2s ease;
+  transition: opacity 1s ease;
 }
 
+/* INNER CONTENT */
 .slide-inner {
   max-width: 900px;
   margin: 0 auto;
   text-align: center;
 }
 
+/* TITLES */
 .slide-inner h1 {
   font-size: 64px;
   margin-bottom: 20px;
 }
 
+/* TEXT */
 .slide-inner p {
   font-size: 36px;
-}
-
-/* FADE STATES */
-#slide.fade-out {
-  opacity: 0;
-}
-
-#slide.fade-in {
-  opacity: 1;
 }
 
 /* TICKER */
@@ -88,19 +90,28 @@ body {
   width: 100%;
   height: 70px;
   background: #111;
+  border-top: 1px solid #333;
   overflow: hidden;
   display: flex;
   align-items: center;
 }
 
+/* TICKER TEXT */
 #ticker-text {
   white-space: nowrap;
   padding-left: 100%;
   animation: scroll 35s linear infinite;
   font-size: 24px;
+  letter-spacing: 1px;
 }
 
-/* FADE EDGE */
+/* SCROLL */
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+/* FADE EDGES (PRO LOOK) */
 .ticker::before,
 .ticker::after {
   content: "";
@@ -108,6 +119,7 @@ body {
   width: 140px;
   height: 100%;
   z-index: 2;
+  pointer-events: none;
 }
 
 .ticker::before {
@@ -118,9 +130,4 @@ body {
 .ticker::after {
   right: 0;
   background: linear-gradient(to left, #111, transparent);
-}
-
-@keyframes scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
 }
