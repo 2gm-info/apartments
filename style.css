@@ -49,23 +49,38 @@ body {
 }
 
 /* SLIDE AREA */
+/* SLIDE AREA */
 #slide {
-  margin-top: 70px;
   height: calc(100vh - 140px);
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  width: 100%;              /* 🔥 manglet hos deg */
+  width: 100vw;   /* 🔥 ekte fullskjerm */
 
   text-align: center;
-  padding: 40px;
-  font-size: 48px;
+  padding: 80px;
 
-  /* 🔥 FADE */
+  box-sizing: border-box;
+
+  /* FADE */
   opacity: 1;
-  transition: opacity 0.6s ease;   /* 🔥 ikke 3s */
+  transition: opacity 0.6s ease;
+}
+
+/* TITTEL */
+#slide h1 {
+  font-size: 80px;
+  margin-bottom: 40px;
+}
+
+/* TEKST */
+#slide p {
+  font-size: 42px;
+  line-height: 1.4;
+  max-width: 1400px;
 }
 
 /* INNER CONTENT */
