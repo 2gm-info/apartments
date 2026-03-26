@@ -2,7 +2,7 @@ let slides = [];
 let index = 0;
 let currentTemp = "--";
 
-/* SAFE GET */
+/* HJELPER */
 function el(id) {
   return document.getElementById(id);
 }
@@ -35,13 +35,14 @@ function fadeTo(content) {
   setTimeout(() => {
     slide.innerHTML = `<div class="slide-inner">${content}</div>`;
 
+    // force repaint
     void slide.offsetWidth;
 
     slide.style.opacity = 1;
   }, 400);
 }
 
-/* SLIDES */
+/* SHOW SLIDE */
 function showSlide() {
   if (!slides.length) return;
 
@@ -80,7 +81,7 @@ async function loadWeatherSlide() {
   }
 }
 
-/* 🔥 TOPBAR WEATHER (ALLTID) */
+/* 🔥 WEATHER FOR TOPBAR (ALLTID + RETRY) */
 async function fetchWeatherForTopbar() {
   try {
     const res = await fetch(
@@ -88,17 +89,31 @@ async function fetchWeatherForTopbar() {
       { headers: { "User-Agent": "infoscreen/1.0" } }
     );
 
+    if (!res.ok) throw new Error("Bad response");
+
     const data = await res.json();
     const temp = data.properties.timeseries[0].data.instant.details.air_temperature;
 
     currentTemp = temp;
     updateTopbar();
+
+    console.log("Temp updated:", temp);
+
   } catch (err) {
-    console.error("Topbar weather error:", err);
+    console.error("Weather fail:", err);
+
+    // fallback
+    if (currentTemp === "--") {
+      currentTemp = "?";
+      updateTopbar();
+    }
+
+    // retry etter 5 sek
+    setTimeout(fetchWeatherForTopbar, 5000);
   }
 }
 
-/* TOPBAR UPDATE */
+/* TOPBAR */
 function updateTopbar() {
   if (!el("top-left")) {
     console.warn("top-left finnes ikke");
@@ -123,12 +138,12 @@ function updateClock() {
   }
 }
 
-/* START når DOM er klar */
+/* START */
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM ready");
+  console.log("App started");
 
   updateClock();
-  fetchWeatherForTopbar();
+  fetchWeatherForTopbar();   // 🔥 viktig
   loadData();
 
   setInterval(showSlide, 15000);
