@@ -13,15 +13,20 @@ async function loadData() {
 }
 
 function fadeTo(content) {
-  const slideEl = document.getElementById("slide");
+  const el = document.getElementById("slide");
 
-  slideEl.classList.add("fade-out");
+  // fade ut
+  el.style.opacity = 0;
 
   setTimeout(() => {
-    slideEl.innerHTML = `<div class="slide-inner">${content}</div>`;
-    slideEl.classList.remove("fade-out");
-    slideEl.classList.add("fade-in");
-  }, 300);
+    el.innerHTML = `<div class="slide-inner">${content}</div>`;
+
+    // 🔥 force repaint (kritisk)
+    void el.offsetWidth;
+
+    // fade inn
+    el.style.opacity = 1;
+  }, 400);
 }
 
 function showSlide() {
@@ -81,7 +86,7 @@ function updateClock() {
 setInterval(showSlide, 10000);
 setInterval(loadData, 60000);
 setInterval(updateClock, 1000);
-setInterval(() => location.reload(), 100000);
+setInterval(() => location.reload(), 300000);
 
 /* START */
 updateClock();
