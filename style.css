@@ -104,6 +104,7 @@ body {
   color: #ff3b3b;
   font-weight: 800;
   font-size: 1.2em;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
 }
 /* TEKST */
 #slide p {
