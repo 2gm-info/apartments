@@ -72,7 +72,7 @@ body {
 /* TITTEL */
 #slide h2 {
   font-size: 64px;
-  opacity: 1.2;
+  opacity: 1;
   text-align: center;
 }
 
@@ -88,25 +88,6 @@ body {
   font-size: 42px;
   line-height: 1.4;
   max-width: 1400px;
-}
-
-/* INNER CONTENT */
-.slide-inner {
-  width: 100%;
-  max-width: 1400px;   /* øk fra 900 → 1400 */
-  margin: 0 auto;
-  text-align: center;
-}
-
-/* TITLES */
-.slide-inner h1 {
-  font-size: 64px;
-  margin-bottom: 20px;
-}
-
-/* TEXT */
-.slide-inner p {
-  font-size: 36px;
 }
 
 /* TICKER */
