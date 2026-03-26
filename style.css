@@ -52,17 +52,20 @@ body {
 #slide {
   margin-top: 70px;
   height: calc(100vh - 140px);
+
   display: flex;
   justify-content: center;
   align-items: center;
+
+  width: 100%;              /* 🔥 manglet hos deg */
+
   text-align: center;
   padding: 40px;
-
   font-size: 48px;
 
   /* 🔥 FADE */
   opacity: 1;
-  transition: opacity 3s ease;
+  transition: opacity 0.6s ease;   /* 🔥 ikke 3s */
 }
 
 /* INNER CONTENT */
