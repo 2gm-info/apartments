@@ -51,7 +51,7 @@ body {
 /* SLIDE AREA */
 #slide {
   height: calc(100vh - 140px);
-
+  gap: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
