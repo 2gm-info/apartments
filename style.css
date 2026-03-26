@@ -95,7 +95,11 @@ body {
 #slide li {
   margin: 10px 0;
 }
-
+#slide ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 /* TEKST */
 #slide p {
   font-size: 42px;
