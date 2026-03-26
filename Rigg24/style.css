@@ -1,0 +1,164 @@
+/* BASE */
+body {
+  margin: 0;
+  background: #0a0a0a;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  overflow: hidden;
+}
+
+/* TOP BAR */
+.topbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  background: #111;
+  border-bottom: 1px solid #333;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  padding: 0 20px;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+/* LEFT (temp) */
+#top-left {
+  justify-self: start;
+  font-size: 24px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* CENTER (clock) */
+#top-center {
+  justify-self: center;
+  font-size: 34px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* RIGHT (date) */
+#top-right {
+  justify-self: end;
+  font-size: 24px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* SLIDE AREA */
+#slide {
+  height: calc(100vh - 140px);
+  gap: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;   /* 🔥 ekte fullskjerm */
+
+  text-align: center;
+  padding: 80px;
+
+  box-sizing: border-box;
+
+  /* FADE */
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+
+/* TITTEL */
+#slide h2 {
+  font-size: 64px;
+  opacity: 1;
+  text-align: center;
+}
+
+#slide h1 {
+  font-size: 32px;
+  line-height: 1.7;
+  max-width: 1200px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+#slide ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 38px;
+  line-height: 1.6;
+  max-width: 900px;
+}
+
+#slide li {
+  margin: 10px 0;
+}
+#slide ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.alert {
+  color: #ff3b3b;
+  font-weight: 800;
+  font-size: 1.2em;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+}
+/* TEKST */
+#slide p {
+  font-size: 42px;
+  line-height: 1.4;
+  max-width: 1400px;
+}
+
+/* TICKER */
+.ticker {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  background: #111;
+  border-top: 1px solid #333;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* TICKER TEXT */
+#ticker-text {
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: scroll 35s linear infinite;
+  font-size: 24px;
+  letter-spacing: 1px;
+}
+
+/* SCROLL */
+@keyframes scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+/* FADE EDGES (PRO LOOK) */
+.ticker::before,
+.ticker::after {
+  content: "";
+  position: absolute;
+  width: 140px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ticker::before {
+  left: 0;
+  background: linear-gradient(to right, #111, transparent);
+}
+
+.ticker::after {
+  right: 0;
+  background: linear-gradient(to left, #111, transparent);
+}
