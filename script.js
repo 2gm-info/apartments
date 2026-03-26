@@ -81,7 +81,7 @@ function updateClock() {
 setInterval(showSlide, 10000);
 setInterval(loadData, 60000);
 setInterval(updateClock, 1000);
-setInterval(() => location.reload(), 300000);
+setInterval(() => location.reload(), 100000);
 
 /* START */
 updateClock();
