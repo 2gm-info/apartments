@@ -6,7 +6,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   overflow: hidden;
 }
-background: radial-gradient(circle at left, #111 0%, #0a0a0a 60%);
+
 /* TOP BAR */
 .topbar {
   position: fixed;
@@ -62,7 +62,7 @@ background: radial-gradient(circle at left, #111 0%, #0a0a0a 60%);
 
   text-align: center;
   padding: 80px;
-
+  background: radial-gradient(circle at left, #111 0%, #0a0a0a 60%);
   box-sizing: border-box;
 
   /* FADE */
