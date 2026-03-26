@@ -100,6 +100,11 @@ body {
   padding: 0;
   margin: 0;
 }
+.alert {
+  color: #ff3b3b;
+  font-weight: 800;
+  font-size: 1.2em;
+}
 /* TEKST */
 #slide p {
   font-size: 42px;
