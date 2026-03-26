@@ -70,6 +70,12 @@ body {
 }
 
 /* TITTEL */
+#slide h2 {
+  font-size: 32px;
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
 #slide h1 {
   font-size: 64px;
   line-height: 1.2;
