@@ -18,7 +18,7 @@
       "content": "<h2>About Smoking</h2><h1>Smoking is not permitted directly outside the entrance. Do not leave cigarette waste at the front door. Cameras may be installed if necessary.</h1>"
     },
     {
-      "content": "<h2>Important – Cooking & Fire Alarm</h2><h1>Always use the extractor fan when cooking. If the alarm is triggered without fire, call 110 immediately. Failure may result in a NOK 6,500 charge.</h1>"
+      "content": "<h2>Important – Cooking & Fire Alarm</h2><h1>Always use the extractor fan when cooking. If the alarm is triggered without fire, call <span class='alert'>110</span> immediately. Failure may result in a NOK 6,500 charge.</h1>"
     },
     {
       "content": "<h1>Creating a Safe and Respectful Living Environment This applies to both accommodation rigs and apartments.</h1>"
