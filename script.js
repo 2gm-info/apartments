@@ -2,36 +2,46 @@ let slides = [];
 let index = 0;
 let currentTemp = "--";
 
-/* LOAD DATA */
-async function loadData() {
-  const res = await fetch("data.json?nocache=" + new Date().getTime());
-  const data = await res.json();
-
-  slides = data.slides;
-  document.getElementById("ticker-text").innerText = data.ticker;
-
-  showSlide();
+/* SAFE GET */
+function el(id) {
+  return document.getElementById(id);
 }
 
-/* FADE FUNCTION */
-function fadeTo(content) {
-  const el = document.getElementById("slide");
+/* LOAD DATA */
+async function loadData() {
+  try {
+    const res = await fetch("data.json?nocache=" + new Date().getTime());
+    const data = await res.json();
 
-  // fade ut
-  el.style.opacity = 0;
+    slides = data.slides;
+
+    if (el("ticker-text")) {
+      el("ticker-text").innerText = data.ticker;
+    }
+
+    showSlide();
+  } catch (err) {
+    console.error("Data error:", err);
+  }
+}
+
+/* FADE */
+function fadeTo(content) {
+  const slide = el("slide");
+  if (!slide) return;
+
+  slide.style.opacity = 0;
 
   setTimeout(() => {
-    el.innerHTML = `<div class="slide-inner">${content}</div>`;
+    slide.innerHTML = `<div class="slide-inner">${content}</div>`;
 
-    // force repaint (kritisk)
-    void el.offsetWidth;
+    void slide.offsetWidth;
 
-    // fade inn
-    el.style.opacity = 1;
+    slide.style.opacity = 1;
   }, 400);
 }
 
-/* SHOW SLIDE */
+/* SLIDES */
 function showSlide() {
   if (!slides.length) return;
 
@@ -51,11 +61,7 @@ async function loadWeatherSlide() {
   try {
     const res = await fetch(
       "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=69.23&lon=17.98",
-      {
-        headers: {
-          "User-Agent": "infoscreen/1.0"
-        }
-      }
+      { headers: { "User-Agent": "infoscreen/1.0" } }
     );
 
     const data = await res.json();
@@ -69,22 +75,17 @@ async function loadWeatherSlide() {
     `);
 
     updateTopbar();
-
   } catch (err) {
     console.error("Weather slide error:", err);
   }
 }
 
-/* 🔥 WEATHER FOR TOPBAR (uavhengig av slides) */
+/* 🔥 TOPBAR WEATHER (ALLTID) */
 async function fetchWeatherForTopbar() {
   try {
     const res = await fetch(
       "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=69.23&lon=17.98",
-      {
-        headers: {
-          "User-Agent": "infoscreen/1.0"
-        }
-      }
+      { headers: { "User-Agent": "infoscreen/1.0" } }
     );
 
     const data = await res.json();
@@ -92,36 +93,47 @@ async function fetchWeatherForTopbar() {
 
     currentTemp = temp;
     updateTopbar();
-
   } catch (err) {
     console.error("Topbar weather error:", err);
   }
 }
 
-/* TOPBAR */
+/* TOPBAR UPDATE */
 function updateTopbar() {
-  document.getElementById("top-left").innerText = `Finnsnes ${currentTemp}°C`;
+  if (!el("top-left")) {
+    console.warn("top-left finnes ikke");
+    return;
+  }
+
+  el("top-left").innerText = `Finnsnes ${currentTemp}°C`;
 }
 
-/* CLOCK + DATE */
+/* CLOCK */
 function updateClock() {
   const now = new Date();
 
-  document.getElementById("top-center").innerText =
-    now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+  if (el("top-center")) {
+    el("top-center").innerText =
+      now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+  }
 
-  document.getElementById("top-right").innerText =
-    now.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
+  if (el("top-right")) {
+    el("top-right").innerText =
+      now.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
+  }
 }
 
-/* INTERVALS */
-setInterval(showSlide, 15000);              // slides
-setInterval(loadData, 60000);               // data refresh
-setInterval(updateClock, 1000);             // klokke
-setInterval(fetchWeatherForTopbar, 600000); // temp hvert 10 min
-setInterval(() => location.reload(), 300000); // reload 5 min
+/* START når DOM er klar */
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM ready");
 
-/* START */
-updateClock();
-fetchWeatherForTopbar(); // 🔥 viktig
-loadData();
+  updateClock();
+  fetchWeatherForTopbar();
+  loadData();
+
+  setInterval(showSlide, 15000);
+  setInterval(loadData, 60000);
+  setInterval(updateClock, 1000);
+  setInterval(fetchWeatherForTopbar, 600000);
+  setInterval(() => location.reload(), 300000);
+});
