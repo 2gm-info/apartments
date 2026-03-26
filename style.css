@@ -73,7 +73,6 @@ body {
 #slide h2 {
   font-size: 64px;
   opacity: 1.2;
-  margin-bottom: 30px;
   text-align: center;
 }
 
@@ -81,6 +80,7 @@ body {
   font-size: 32px;
   line-height: 1.7;
   max-width: 1200px;
+  margin-bottom: 30px;
   text-align: center;
 }
 /* TEKST */
