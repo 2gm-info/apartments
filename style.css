@@ -62,7 +62,7 @@ body {
 
   text-align: center;
   padding: 80px;
-  background: radial-gradient(circle at left, #111 0%, #0a0a0a 60%);
+  background: radial-gradient(circle at left, #0f0f0f 0%, #0a0a0a 70%);
   box-sizing: border-box;
 
   /* FADE */
