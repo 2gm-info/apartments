@@ -52,20 +52,27 @@ body {
 /* SLIDE AREA */
 #slide {
   height: calc(100vh - 140px);
-  gap: 30px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  width: 100vw;   /* 🔥 ekte fullskjerm */
-
+  width: 100vw;
   text-align: center;
+
   padding: 80px;
-  background: radial-gradient(circle at left, #0f0f0f 0%, #0a0a0a 70%);
   box-sizing: border-box;
 
-  /* FADE */
+  gap: 40px;  /* 🔥 litt mer luft */
+
+  /* 🔥 bedre gradient */
+  background: radial-gradient(circle at 20% center,
+    #1c1c1c 0%,
+    #121212 35%,
+    #0a0a0a 75%
+  );
+
   opacity: 1;
   transition: opacity 0.6s ease;
 }
